@@ -3,25 +3,13 @@
     <SectionMain>
       <SectionTitleLineWithButton
         :icon="mdiBallotOutline"
-        title="Edit Menu"
+        title="Edit Category"
         main
       >
       </SectionTitleLineWithButton>
       <CardBox form @submit.prevent="store">
-        <FormField label="Category">
-          <FormControl v-model="form.category_id" :options="categoriesOptions" />
-        </FormField>
         <FormField label="Name">
           <FormControl v-model="form.name" />
-        </FormField>
-        <FormField label="Description">
-          <FormControl v-model="form.description" />
-        </FormField>
-        <FormField label="Photo">
-          <FormControl type="file" @change="form.photo = $event.target.files[0]" />
-        </FormField>
-        <FormField label="Price">
-          <FormControl v-model="form.price" />
         </FormField>
         <FormField label="Active">
           <FormCheckRadioGroup
@@ -59,35 +47,17 @@ import LayoutAuthenticated from "@/layouts/LayoutAuthenticated.vue";
 import SectionTitleLineWithButton from "@/components/SectionTitleLineWithButton.vue";
 import NotificationBarInCard from "@/components/NotificationBarInCard.vue";
 import { useForm } from "@inertiajs/inertia-vue3";
-import pickBy from 'lodash/pickBy';
 
 const props = defineProps({
-  categories: Array,
-  menu: Object
+  category: Object
 })
 
-const categoriesOptions = computed(() => props.categories.map((category) => {
-  return {
-    id: category.id,
-    value: category.id,
-    label: category.name
-  }
-}))
-
 const form = useForm({
-            category_id: props.menu.category_id,
-            name: props.menu.name,
-            description: props.menu.description,
-            photo: null,
-            price: props.menu.price,
-            active: props.menu.active,
+            name: props.category.name,
+            active: props.category.active,
         })
 
         const store = () => {
-            form.transform((data) => pickBy(data))
-            .put(`/admin/menus/${props.menu.id}`, {
-                onSuccess: (page) => console.log(page),
-                onError: errors => console.log(errors)
-            });
+            form.put(`/admin/categories/${props.category.id}`);
         }
 </script>

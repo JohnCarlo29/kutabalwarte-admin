@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\MenuController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
@@ -40,6 +41,7 @@ Route::name('admin.')
     ->prefix('admin')
     ->group(function () {
         Route::resource('menus', MenuController::class);
+        Route::resource('categories', CategoryController::class);
     });
 
 require __DIR__ . '/auth.php';

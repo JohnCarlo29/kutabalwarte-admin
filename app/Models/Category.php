@@ -10,6 +10,12 @@ class Category extends Model
 {
     use HasFactory;
 
+    protected $guarded = ['id'];
+
+    protected $casts = [
+        'active' => 'boolean'
+    ];
+
     public function menus(): HasMany
     {
         return $this->hasMany(Menu::class);

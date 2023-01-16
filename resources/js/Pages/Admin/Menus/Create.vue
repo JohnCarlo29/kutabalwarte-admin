@@ -3,7 +3,7 @@
     <SectionMain>
       <SectionTitleLineWithButton
         :icon="mdiBallotOutline"
-        title="Forms example"
+        title="New Menu"
         main
       >
       </SectionTitleLineWithButton>

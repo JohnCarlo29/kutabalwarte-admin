@@ -15,13 +15,14 @@ class CategoryController extends Controller
 {
     public function index()
     {
-        $category = Category::paginate(10)
+        $categories = Category::paginate(10)
             ->through(fn ($category) => [
                 'id' => $category->id,
                 'name' => $category->name,
+                'active' => $category->active
             ]);
 
-        return Inertia::render('Admin/Category/Index', compact('category'));
+        return Inertia::render('Admin/Category/Index', compact('categories'));
     }
 
     public function create()
@@ -51,7 +52,7 @@ class CategoryController extends Controller
     {
         $category->update($request->validated());
 
-        return Redirect::back()->with('success', 'category updated.');
+        return Redirect::route('admin.categories.index')->with('success', 'category updated.');
     }
 
     public function destroy(Category $category)
